@@ -2,11 +2,10 @@ package be.vdab;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 class RekeningTest {
 
@@ -33,6 +32,27 @@ class RekeningTest {
         rekening.stort(BigDecimal.ONE);
         rekening.stort(BigDecimal.TEN);
         assertThat(rekening.getSaldo()).isEqualByComparingTo("11");
+    }
+
+    @Test
+    void hetBedragMagNietNulZijn() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> rekening.stort(BigDecimal.ZERO)
+        );
+    }
+
+    @Test
+    void hetGestortBedragMagNietNegatiefZijn() {
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> rekening.stort(BigDecimal.valueOf(-1))
+        );
+    }
+
+    @Test
+    void bedragMagNietNullZijn() {
+        assertThatNullPointerException().isThrownBy(
+                () -> rekening.stort(null)
+        );
     }
 }
 
