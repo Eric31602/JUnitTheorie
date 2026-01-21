@@ -1,9 +1,12 @@
 package be.vdab;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rekening {
     private BigDecimal saldo = BigDecimal.ZERO;
+    private final List<BigDecimal> stortingen = new ArrayList<>();
 
     public void stort(BigDecimal bedrag) {
         if (bedrag.compareTo(BigDecimal.ZERO) <= 0) {
@@ -14,5 +17,12 @@ public class Rekening {
 
     public BigDecimal getSaldo() {
         return saldo;
+    }
+
+    List<BigDecimal> getStortingen() {
+        return stortingen;
+    }
+    List<BigDecimal> getStortingenGesorteerd() {
+        return stortingen.stream().sorted().toList();
     }
 }
